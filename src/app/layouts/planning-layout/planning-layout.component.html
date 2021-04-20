@@ -51,6 +51,7 @@
         <i *ngIf="leftDivShow" href="#demo" (click)="leftDivClick()" data-toggle="collapse"
           class="fa fa-caret-left fa-2x pull-right pr-2 pt-2 sticky-div " aria-hidden="true"></i>
       </div>
+
       <app-list-items></app-list-items>
 
     </div>
@@ -61,6 +62,33 @@
     </div>
     <div class="col outerBox">
       <div class="ml-1 mr-2 mt-1">
+        <div class="row border p-3 deviceDetails">
+          <div class="col">Device Name <div> <strong>Test_Device5</strong> </div>
+          </div>
+          <div class="col">IP Address <div> <strong>10.10.20.35</strong> </div>
+          </div>
+          <div class="col">Backup <div> <strong> <span class="text-success"> Enabled</span> </strong> </div>
+          </div>
+          <div class="col">Next Run</div>
+          <div class="col">Last Run</div>
+          <div class="col">Device Vendor</div>
+          <div class="col">
+            <div class="dropdown">
+              <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Action
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Edit</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Show Configuration</a>
+                <a class="dropdown-item" href="#">Adhoc Request</a>
+                <a class="dropdown-item" href="#">Change Schedule</a>
+                <a class="dropdown-item" href="#">View Run Log</a>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div class="row p-5 border bg-white">
 
@@ -69,5 +97,4 @@
       </div>
     </div>
   </div>
-
 </div>
