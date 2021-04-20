@@ -1,45 +1,45 @@
 <form [formGroup]="myFormGroup">
-  <div class="row text-center pt-2 sticky-div shadow-sm mb-3 bg-white rounded">
-    <div class="col-5">
-      <h6 class="pt-1 text-muted">New {{this.pageName}}</h6>
-    </div>
-    <div class="col-7 mb-2">
-      <button class=" btn btn-light btn-sm mr-2" (click)="onSubmit()" type="submit"><i class="fa fa-floppy-o fa-lg"></i>
-        Save </button>
-      <button class="btn btn-light btn-sm" [routerLink]="discardFunc()">
-        <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
-        Discard
-      </button>
+  <!-- <div class="col">
+    <h6 class="pt-1 text-muted">New {{this.pageName}}</h6>
+  </div> -->
+  <div class="col text-right">
+    <button class="btn btn-light  btn-sm mr-3" [routerLink]="discardFunc()">
+      Cancel
+    </button>
+    <button class=" btn btn-primary btn-sm mr-2 " (click)="onSubmit()" type="submit">
+      Save </button>
+  </div>
+  <div>
+    <div *ngFor="let form_elem of formElements" class="col-6">
+      <div [ngSwitch]="form_elem.element_type">
+
+        <div class="form-group justify-content-center align-items-center" *ngSwitchCase="'input'">
+          <label for="{{form_elem.element_name}}">{{form_elem.element_name}}</label>
+          <input type="text" class="form-control form-control-sm" formControlName="{{form_elem.api_param_name}}">
+        </div>
+
+        <div class="form-group justify-content-center align-items-center" *ngSwitchCase="'number'">
+          <label for="{{form_elem.element_name}}">{{form_elem.element_name}}</label>
+          <input type="number" class="form-control form-control-sm" formControlName="{{form_elem.api_param_name}}" />
+        </div>
+
+        <div class="form-group justify-content-center align-items-center" *ngSwitchCase="'select'">
+          <label for="{{form_elem.element_name}}">{{form_elem.element_name}}</label>
+          <select
+            (change)="bindChildDropDownList(form_elem.tab_element_id, form_elem.child_elementid, $event, form_elem.element_action)"
+            class="form-control form-control-sm" formControlName="{{form_elem.api_param_name}}"
+            id="{{form_elem.tab_element_id}}" attr.data-val="{{form_elem.obj_name}}0" ngModel required>
+            <option [value]="-1" selected>Please Select
+            </option>
+            <option *ngFor="let opt of form_elem.element_options" value="{{opt.opt_id}}"
+              attr.data-val="{{opt.opt_selected_value}}">
+              {{opt.opt_value}}</option>
+          </select>
+        </div>
+      </div>
     </div>
   </div>
-  <div *ngFor="let form_elem of formElements" class="px-3">
-    <div [ngSwitch]="form_elem.element_type">
 
-      <div class="form-group" *ngSwitchCase="'input'">
-        <label for="{{form_elem.element_name}}">{{form_elem.element_name}}</label>
-        <input type="text" class="form-control form-control-sm" formControlName="{{form_elem.api_param_name}}">
-      </div>
-
-      <div class="form-group" *ngSwitchCase="'number'">
-        <label for="{{form_elem.element_name}}">{{form_elem.element_name}}</label>
-        <input type="number" class="form-control form-control-sm" formControlName="{{form_elem.api_param_name}}" />
-      </div>
-
-      <div class="form-group" *ngSwitchCase="'select'">
-        <label for="{{form_elem.element_name}}">{{form_elem.element_name}}</label>
-        <select
-          (change)="bindChildDropDownList(form_elem.tab_element_id, form_elem.child_elementid, $event, form_elem.element_action)"
-          class="form-control form-control-sm" formControlName="{{form_elem.api_param_name}}"
-          id="{{form_elem.tab_element_id}}" attr.data-val="{{form_elem.obj_name}}0" ngModel required>
-          <option [value]="-1" selected>Please Select
-          </option>
-          <option *ngFor="let opt of form_elem.element_options" value="{{opt.opt_id}}"
-            attr.data-val="{{opt.opt_selected_value}}">
-            {{opt.opt_value}}</option>
-        </select>
-      </div>
-    </div>
-  </div>
 </form>
 <!-- <form>
   <div class="form-group">

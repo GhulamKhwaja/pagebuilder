@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PlanningService } from '../../planning/planning.service';
 import * as $ from 'jquery';
+import { ServiceService } from '../../service.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list-items',
@@ -11,24 +13,36 @@ import * as $ from 'jquery';
 export class ListItemsComponent implements OnInit {
   rightDivShow: boolean = false;
   leftDivShow: boolean = true;
+  messageReceived: any;
+  private subscriptionName: Subscription;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private planningService: PlanningService
-  ) {}
+    private planningService: PlanningService,
+    private appService: ServiceService
+  ) {
+    this.subscriptionName = this.appService.getUpdate().subscribe((message) => {
+      //message contains the data sent from service
+      this.messageReceived = message.text;
+      this.pageName = this.messageReceived.pageName;
+      this.pageId = this.messageReceived.pageID;
+
+      console.log(this.pageName, this.pageId);
+      this.planningService
+        .getDeviceList(this.pageName)
+        .subscribe((data: any) => {
+          this.allDevices = data.Details;
+        });
+    });
+  }
+
   allDevices: any = [];
   pageId;
   pageName;
   searchText;
-  ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      this.pageId = params.id;
-      this.pageName = params.pageName;
-    });
-    this.planningService.getAllDevice().subscribe((data: any) => {
-      this.allDevices = data.deviceList;
-    });
-  }
+
+  ngOnInit() {}
 
   routeToAddDetails() {
     let url = '/planning/add-items/' + this.pageName + '/' + this.pageId + '';

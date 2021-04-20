@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import { PlanningService } from 'src/app/planning/planning.service';
-
+import { ServiceService } from '../../service.service';
 @Component({
   selector: 'app-planning-layout',
   templateUrl: './planning-layout.component.html',
@@ -15,7 +15,8 @@ export class PlanningLayoutComponent implements OnInit {
   leftDivShow: boolean = true;
   constructor(
     private router: Router,
-    private planningService: PlanningService
+    private planningService: PlanningService,
+    private appService: ServiceService
   ) {}
 
   menuList;
@@ -31,6 +32,11 @@ export class PlanningLayoutComponent implements OnInit {
     });
   }
 
+  sendMessage(pageDetails): void {
+    // send message to subscribers via observable subject
+    this.appService.sendUpdate(pageDetails);
+  }
+
   getImageUrl(ele) {
     return '../../../assets/menu-icon-' + ele.pageName + '.png';
   }
@@ -42,6 +48,13 @@ export class PlanningLayoutComponent implements OnInit {
       '/planning/list-items',
       { pageName: pageName, id: pageID },
     ]);
+  }
+
+  setValue(element) {
+    let pageDetails = { pageName: element.pageName, pageID: element.pageId };
+    this.sendMessage(pageDetails);
+    localStorage.setItem('pageName', element.pageName);
+    localStorage.setItem('pageID', element.pageId);
   }
 
   routeMenu(element) {

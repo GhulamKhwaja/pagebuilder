@@ -4,7 +4,7 @@
 <div class="text-center sideMenuBar  border-top">
   <div class="mb-2 pt-2 pb-1 sideMenu" *ngFor="let indItem of menuList" [routerLinkActive]="'is-active'"
     [ngClass]="{'is-active': listActive.isActive || addActive.isActive }">
-    <a [routerLink]="routeMenu(indItem)" class="text-decoration-none menu-color">
+    <a [routerLink]="routeMenu(indItem)" (click)="setValue(indItem)" class="text-decoration-none menu-color">
       <img [src]="getImageUrl(indItem)" alt="">
       <p *ngIf="indItem.pageName != 'Circuit' && indItem.pageName != 'Topology'" class="pb-0 ">
         {{indItem.pageName}}</p>
@@ -15,12 +15,44 @@
       #addActive="routerLinkActive" style="display: none"></a>
   </div>
 </div>
+
 <div class="rightContainer border">
+
   <div class="row ml-0 mr-0">
     <div id="demo" class="col-3 border box-inner collapse show mt-1 px-0">
-      <i *ngIf="leftDivShow" href="#demo" (click)="leftDivClick()" data-toggle="collapse"
-        class="fa fa-caret-left fa-2x pull-right pr-2 pt-2 sticky-div" aria-hidden="true"></i>
-      <router-outlet></router-outlet>
+
+      <div class="row border-bottom mx-0 mb-0">
+        <nav class="navbar navbar-expand-lg py-0 col align-self-end">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item pt-25">
+              <span type="button" class="btn btn-light btn-sm bc-n"><i class="fa fa-plus-circle fa-lg"
+                  aria-hidden="true"></i>
+              </span>
+            </li>
+            <li class="nav-item dropdown">
+              <span type="button" class="nav-link btn btn-light btn-sm bc-n" id="navbarDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+              </span>
+              <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">View Config Backup</a>
+                <a class="dropdown-item" data-target="#config_backup" data-toggle="modal" id="comapre_config"
+                  data-backdrop="static" data-keyboard="false" (click)="onCompareTextResults()"
+                  href="#config_backup">Compare Config Backup</a> <a class="dropdown-item" href="#">Create Device
+                  Group</a>
+                <a class="dropdown-item" href="#">Delete Device</a>
+                <a class="dropdown-item" href="#">Schedule Run</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item"> Download All Device</a>
+              </div> -->
+            </li>
+          </ul>
+        </nav>
+        <i *ngIf="leftDivShow" href="#demo" (click)="leftDivClick()" data-toggle="collapse"
+          class="fa fa-caret-left fa-2x pull-right pr-2 pt-2 sticky-div " aria-hidden="true"></i>
+      </div>
+      <app-list-items></app-list-items>
+
     </div>
     <div class=" customSlider border-right border-top mt-1" *ngIf="rightDivShow">
       <img src="../../../assets/new-device-slider.png" alt="">
@@ -29,36 +61,13 @@
     </div>
     <div class="col outerBox">
       <div class="ml-1 mr-2 mt-1">
+
         <div class="row p-5 border bg-white">
-          others...
+
+          <app-add-items style="min-width: 100%;"></app-add-items>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- <div class="col pull-right mt-1 pl-0 border">
-  <div class="container-fluid p-0 m-0">
-    <div class="row">
-      <div id="demo" class="col-4 box-inner collapse pr-0">
-        <i *ngIf="leftDivShow" href="#demo" (click)="leftDivClick()" data-toggle="collapse"
-          class="fa fa-caret-left fa-2x pull-right pr-2 pt-2 sticky-div" aria-hidden="true"></i>
-        <router-outlet></router-outlet>
-      </div>
-      <div class="col-8" style=" height: 92vh">
-        <span *ngIf="rightDivShow" class="customSlider">
-          <img src="../../../assets/new-device-slider.png" alt="">
-          <i href="#demo" (click)="rightDivClick()" data-toggle="collapse" class="fa fa-caret-right fa-2x"
-            aria-hidden="true"></i>
-        </span>
-        <div class="container">
-          <div class="row ml-4">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-
-  <!-- </div> -->
-  <!-- </div> -->
+</div>

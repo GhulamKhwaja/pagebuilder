@@ -1,29 +1,8 @@
-.box {
-  float: left;
-}
-.box-inner {
-  width: 215px;
-  /* height: 92vh; */
-  display: flex;
-  flex-flow: column;
-  height: 100%;
-  /* padding: 5px; */
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.outerBox {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
-}
-
 tbody {
   display: block;
   height: 72vh;
   overflow: auto;
 }
-
 thead,
 tbody tr {
   color: var(--font-color);
@@ -43,23 +22,8 @@ tbody tr {
   padding: 0.25rem 0.5rem;
 }
 
-.menu-color {
-  color: grey;
-}
-
-/* width */
-::-webkit-scrollbar {
-  width: 4px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey;
-  border-radius: 10px;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #7b7474;
-  border-radius: 10px;
+.outerBox {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
 }

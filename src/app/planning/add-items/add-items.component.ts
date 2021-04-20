@@ -15,6 +15,8 @@ import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { ServiceService } from 'src/app/service.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-items',
@@ -25,6 +27,8 @@ export class AddItemsComponent implements OnInit {
   myFormGroup: FormGroup;
   // formTemplate: any = form_template;
   childOptionsList: any[];
+  messageReceived: any;
+  private subscriptionName: Subscription;
 
   constructor(
     private router: Router,
@@ -32,28 +36,36 @@ export class AddItemsComponent implements OnInit {
     private planningService: PlanningService,
     private _location: Location,
     private fb: FormBuilder,
-    private http: HttpClient
-  ) {}
+    private http: HttpClient,
+    private appService: ServiceService
+  ) {
+    this.subscriptionName = this.appService.getUpdate().subscribe((message) => {
+      //message contains the data sent from service
+      this.messageReceived = message.text;
+      this.pageName = this.messageReceived.pageName;
+      this.pageId = this.messageReceived.pageID;
+
+      console.log(this.pageName, this.pageId);
+      this.planningService
+        .createPageItems(this.pageId)
+        .subscribe((data: any) => {
+          this.formElements = data.tabs_list[0].elements_list;
+          // console.log(this.formElements);
+          this.formElements.forEach((input_template) => {
+            this.myFormGroup.addControl(
+              input_template.api_param_name,
+              new FormControl('')
+            );
+          });
+        });
+    });
+  }
   pageId;
   pageName;
   formElements;
   submitAction;
   ngOnInit() {
     this.myFormGroup = new FormGroup({});
-    this.route.params.subscribe((params: Params) => {
-      this.pageId = params.id;
-      this.pageName = params.pageName;
-    });
-    this.planningService.createPageItems(this.pageId).subscribe((data: any) => {
-      this.formElements = data.tabs_list[0].elements_list;
-      // console.log(this.formElements);
-      this.formElements.forEach((input_template) => {
-        this.myFormGroup.addControl(
-          input_template.api_param_name,
-          new FormControl('')
-        );
-      });
-    });
   }
 
   onSubmit() {

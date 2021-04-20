@@ -1,4 +1,4 @@
-<div class="row p-2 sticky-div mb-0 bg-white rounded">
+<!-- <div class="row p-2 sticky-div mb-0 bg-white rounded">
   <div class="col text-right">
     <span type="button" [routerLink]="routeToAddDetails()" class="btn btn-light btn-sm"><i
         class="fa fa-plus-circle fa-lg" aria-hidden="true"></i>
@@ -6,7 +6,7 @@
     <span type="button" class="btn btn-light btn-sm"><i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
     </span>
   </div>
-</div>
+</div> -->
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
@@ -47,7 +47,10 @@
           <th scope="row"><input type="checkbox" id="{{indVal.neID}}"></th>
           <td>{{indVal.name}} </td>
           <td>{{indVal.serialno}} </td>
-          <td>{{indVal.status}} </td>
+
+          <span *ngIf="indVal.status === 1" class="text-success">Active </span>
+          <span *ngIf="indVal.status === 0" class="text-danger">Inactive </span>
+          <!-- <td>{{indVal.status}} </td> -->
         </tr>
       </tbody>
     </table>

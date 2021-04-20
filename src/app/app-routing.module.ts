@@ -14,15 +14,27 @@ import { ShowPageComponent } from './show-page/show-page.component';
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'planning', component:PlanningLayoutComponent, loadChildren: () => PlanningModule, data : {moduleName : 'Planning'}},
-  { path: 'configuration', component:ConfigurationLayoutComponent, loadChildren: () => ConfigurationModule, data : {moduleName : 'Configuration'}},
+  {
+    path: 'planning',
+    component: PlanningLayoutComponent,
+    loadChildren: () => PlanningModule,
+    data: { moduleName: 'Planning' },
+  },
+  {
+    path: 'configuration',
+    component: ConfigurationLayoutComponent,
+    loadChildren: () => ConfigurationModule,
+    data: { moduleName: 'Configuration' },
+  },
 
-  { path: 'createPage', component: EditAppComponent },
-  { path: 'showPage', component: ShowPageComponent },
+  // { path: '', redirectTo: 'createPage', pathMatch: 'full' },
+
+  // { path: 'createPage', component: EditAppComponent },
+  // { path: 'showPage', component: ShowPageComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
