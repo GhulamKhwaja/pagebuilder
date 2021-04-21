@@ -1,40 +1,33 @@
 <app-header></app-header>
 <!-- <div class="container-fluid "> -->
 <!-- <div class="row"> -->
-<div class="text-center sideMenuBar  border-top">
-  <div class="mb-2 pt-2 pb-1 sideMenu" *ngFor="let indItem of menuList" [routerLinkActive]="'is-active'"
-    [ngClass]="{'is-active': listActive.isActive || addActive.isActive }">
-    <a [routerLink]="routeMenu(indItem)" (click)="setValue(indItem)" class="text-decoration-none menu-color">
-      <img [src]="getImageUrl(indItem)" alt="">
-      <p *ngIf="indItem.pageName != 'Circuit' && indItem.pageName != 'Topology'" class="pb-0 ">
-        {{indItem.pageName}}</p>
-    </a>
-    <a routerLink="/planning/list-items/{{indItem.pageName}}/{{indItem.pageId}}" routerLinkActive
-      #listActive="routerLinkActive" style="display: none"></a>
-    <a routerLink="/planning/add-items/{{indItem.pageName}}/{{indItem.pageId}}" routerLinkActive
-      #addActive="routerLinkActive" style="display: none"></a>
-  </div>
+<div class="text-center sideMenuBar border-top">
+ <div class="mb-2 pt-2 pb-1 sideMenu" *ngFor="let indItem of menuList" [routerLinkActive]="'is-active'" [ngClass]="{ 'is-active': listActive.isActive || addActive.isActive }">
+  <a [routerLink]="routeMenu(indItem)" (click)="setValue(indItem)" class="text-decoration-none menu-color">
+   <img [src]="getImageUrl(indItem)" alt="" />
+   <p *ngIf="indItem.pageName != 'Circuit' && indItem.pageName != 'Topology'" class="pb-0">
+    {{ indItem.pageName }}
+   </p>
+  </a>
+  <a routerLink="/planning/list-items/{{ indItem.pageName }}/{{ indItem.pageId }}" routerLinkActive #listActive="routerLinkActive" style="display: none"></a>
+  <a routerLink="/planning/add-items/{{ indItem.pageName }}/{{ indItem.pageId }}" routerLinkActive #addActive="routerLinkActive" style="display: none"></a>
+ </div>
 </div>
 
 <div class="rightContainer border">
-
-  <div class="row ml-0 mr-0">
-    <div id="demo" class="col-3 border box-inner collapse show mt-1 px-0">
-
-      <div class="row border-bottom mx-0 mb-0">
-        <nav class="navbar navbar-expand-lg py-0 col align-self-end">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item pt-25">
-              <span type="button" class="btn btn-light btn-sm bc-n"><i class="fa fa-plus-circle fa-lg"
-                  aria-hidden="true"></i>
-              </span>
-            </li>
-            <li class="nav-item dropdown">
-              <span type="button" class="nav-link btn btn-light btn-sm bc-n" id="navbarDropdown" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
-              </span>
-              <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+ <div class="row ml-0 mr-0">
+  <div id="demo" class="col-3 border box-inner collapse show mt-1 px-0">
+   <div class="row border-bottom mx-0 mb-0">
+    <nav class="navbar navbar-expand-lg py-0 col align-self-end">
+     <ul class="navbar-nav ml-auto">
+      <li class="nav-item pt-25">
+       <span type="button" class="btn btn-light btn-sm bc-n"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> </span>
+      </li>
+      <li class="nav-item dropdown">
+       <span type="button" class="nav-link btn btn-light btn-sm bc-n" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+       </span>
+       <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="#">View Config Backup</a>
                 <a class="dropdown-item" data-target="#config_backup" data-toggle="modal" id="comapre_config"
                   data-backdrop="static" data-keyboard="false" (click)="onCompareTextResults()"
@@ -45,56 +38,87 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item"> Download All Device</a>
               </div> -->
-            </li>
-          </ul>
-        </nav>
-        <i *ngIf="leftDivShow" href="#demo" (click)="leftDivClick()" data-toggle="collapse"
-          class="fa fa-caret-left fa-2x pull-right pr-2 pt-2 sticky-div " aria-hidden="true"></i>
-      </div>
+      </li>
+     </ul>
+    </nav>
+    <i *ngIf="leftDivShow" href="#demo" (click)="leftDivClick()" data-toggle="collapse" class="fa fa-caret-left fa-2x pull-right pr-2 pt-2 sticky-div" aria-hidden="true"></i>
+   </div>
 
-      <app-list-items></app-list-items>
-
-    </div>
-    <div class=" customSlider border-right border-top mt-1" *ngIf="rightDivShow">
-      <img src="../../../assets/new-device-slider.png" alt="">
-      <i href="#demo" data-toggle="collapse" (click)="rightDivClick()" class="fa fa-caret-right fa-2x"
-        aria-hidden="true"></i>
-    </div>
-    <div class="col outerBox">
-      <div class="ml-1 mr-2 mt-1">
-        <div class="row border p-3 deviceDetails">
-          <div class="col">Device Name <div> <strong>Test_Device5</strong> </div>
-          </div>
-          <div class="col">IP Address <div> <strong>10.10.20.35</strong> </div>
-          </div>
-          <div class="col">Backup <div> <strong> <span class="text-success"> Enabled</span> </strong> </div>
-          </div>
-          <div class="col">Next Run</div>
-          <div class="col">Last Run</div>
-          <div class="col">Device Vendor</div>
-          <div class="col">
-            <div class="dropdown">
-              <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Action
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Edit</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Show Configuration</a>
-                <a class="dropdown-item" href="#">Adhoc Request</a>
-                <a class="dropdown-item" href="#">Change Schedule</a>
-                <a class="dropdown-item" href="#">View Run Log</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row p-5 border bg-white">
-
-          <app-add-items style="min-width: 100%;"></app-add-items>
-        </div>
-      </div>
-    </div>
+   <app-list-items></app-list-items>
   </div>
+  <div class="customSlider border-right border-top mt-1" *ngIf="rightDivShow">
+   <img src="../../../assets/new-device-slider.png" alt="" />
+   <i href="#demo" data-toggle="collapse" (click)="rightDivClick()" class="fa fa-caret-right fa-2x" aria-hidden="true"></i>
+  </div>
+  <div class="col outerBox">
+   <div class="ml-1 mr-2 mt-1">
+    <div class="row border p-3 deviceDetails">
+     <table>
+      <tbody>
+       <tr *ngFor="let ValbyID of deviceDtls">
+        <td>
+         <div class="col">
+          {{ ValbyID.type }} Name
+          <div>
+           <strong>{{ ValbyID.name }}</strong>
+          </div>
+         </div>
+        </td>
+
+        <td>
+         <div class="col">
+          Type
+          <div>
+           <strong>{{ ValbyID.elementtype }}</strong>
+          </div>
+         </div>
+        </td>
+        <td>
+         <div class="col">
+          Status
+          <div>
+           <strong>{{ ValbyID.status }}</strong>
+          </div>
+         </div>
+        </td>
+        <td>
+         <div class="col">
+          Serial
+          <div>
+           <strong>{{ ValbyID.serialno }}</strong>
+          </div>
+         </div>
+        </td>
+        <td>
+         <div class="col">
+          Location
+          <div>
+           <strong>{{ ValbyID.loc }}</strong>
+          </div>
+         </div>
+        </td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td>
+         <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+           <a class="nav-item active" id="nav-home-tab" data-toggle="tab" href="#nav-graph" role="tab" aria-controls="nav-home" aria-selected="true"><img src="../../../assets/tabicon.png" /></a>
+           <a class="nav-item" id="nav-profile-tab" data-toggle="tab" href="#nav-Editdata" role="tab" aria-controls="nav-profile" aria-selected="false"><img src="../../../assets/tabicon2.png" /></a>
+          </div>
+         </nav>
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <div class="tab-content" id="nav-tabContent">
+     <div class="tab-pane fade" id="nav-Editdata" role="tabpanel" aria-labelledby="nav-home-tab">
+      <div class="row p-5 border bg-white">
+       <app-add-items style="min-width: 100%"></app-add-items>
+      </div>
+     </div>
+     <div class="tab-pane fade show active" id="nav-graph" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+    </div>
+   </div>
+  </div>
+ </div>
 </div>

@@ -8,52 +8,48 @@
   </div>
 </div> -->
 <nav>
-  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-      aria-controls="nav-home" aria-selected="true">All {{this.pageName}}</a>
-    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-      aria-controls="nav-profile" aria-selected="false">Groups</a>
-  </div>
+ <div class="nav nav-tabs" id="nav-tab" role="tablist">
+  <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">All {{ this.pageName }}</a>
+  <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Groups</a>
+ </div>
 </nav>
 <div class="tab-content" id="nav-tabContent">
-  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-    <table class="table table-hover  table-borderless mb-0">
-      <thead>
-        <tr>
-          <th scope="col"></th>
-          <th scope="col">Name</th>
-          <th scope="col">Serial</th>
-          <th scope="col">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="background-color: #eeeeee;">
-          <td></td>
-          <td>
-            <div class="form-group mb-0">
-              <input type="text" class="form-control form-control-sm " id="name" (keyup)="filterValues($event)"
-                placeholder="">
-            </div>
-          </td>
-          <td>
-            <div class="form-group mb-0">
-              <input type="text" class="form-control form-control-sm " id="serial" (keyup)="filterValues($event)"
-                placeholder="">
-            </div>
-          </td>
-          <td></td>
-        </tr>
-        <tr *ngFor=" let indVal of allDevices | filter:searchText">
-          <th scope="row"><input type="checkbox" id="{{indVal.neID}}"></th>
-          <td>{{indVal.name}} </td>
-          <td>{{indVal.serialno}} </td>
+ <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+  <table class="table table-hover table-borderless mb-0">
+   <thead>
+    <tr>
+     <th scope="col"></th>
+     <th scope="col">Name</th>
+     <th scope="col">Serial</th>
+     <th scope="col">Status</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr style="background-color: #eeeeee">
+     <td></td>
+     <td>
+      <div class="form-group mb-0">
+       <input type="text" class="form-control form-control-sm" id="name" (keyup)="filterValues($event)" placeholder="" />
+      </div>
+     </td>
+     <td>
+      <div class="form-group mb-0">
+       <input type="text" class="form-control form-control-sm" id="serial" (keyup)="filterValues($event)" placeholder="" />
+      </div>
+     </td>
+     <td></td>
+    </tr>
+    <tr *ngFor="let indVal of allDevices | filter: searchText" (click)="getRecord(indVal)">
+     <th scope="row"><input type="checkbox" id="{{ indVal.id }}" /></th>
+     <td>{{ indVal.name }}</td>
+     <td>{{ indVal.serialno }}</td>
 
-          <span *ngIf="indVal.status === 1" class="text-success">Active </span>
-          <span *ngIf="indVal.status === 0" class="text-danger">Inactive </span>
-          <!-- <td>{{indVal.status}} </td> -->
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+     <span *ngIf="indVal.status === 1" class="text-success">Active </span>
+     <span *ngIf="indVal.status === 0" class="text-danger">Inactive </span>
+     <!-- <td>{{indVal.status}} </td> -->
+    </tr>
+   </tbody>
+  </table>
+ </div>
+ <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
 </div>
