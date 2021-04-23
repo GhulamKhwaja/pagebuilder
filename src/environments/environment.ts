@@ -13,6 +13,7 @@ export const environment = {
   getMenu: "/getPageGroupPages",
   createPage: "/getTabsAndElements",
   getDeviceDtl: "/getDeviceDtl",
+  getDeviceData: "/getDeviceData",
  },
  configApiEndPoint: {
   getDevice: "/getAllDevice",

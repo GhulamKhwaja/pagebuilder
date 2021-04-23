@@ -70,4 +70,26 @@ export class PlanningService {
    return this.http.get(environment.webApiBaseUrl + environment.apiEndPoint.GetLink, { headers: headers });
   }
  }
+
+ getDeviceDataByID(pageName, id): Observable<any> {
+  if (pageName === "Device") {
+   return this.http.get(environment.baseUrl + environment.apiEndPoint.getDeviceData + "/" + id, { headers: headers });
+  }
+
+  if (pageName === "Shelf") {
+   return this.http.get(environment.webApiBaseUrl + environment.apiEndPoint.GetShelf, { headers: headers });
+  }
+
+  if (pageName === "Port") {
+   return this.http.get(environment.webApiBaseUrl + environment.apiEndPoint.GetPorts, { headers: headers });
+  }
+
+  if (pageName === "Card") {
+   return this.http.get(environment.webApiBaseUrl + environment.apiEndPoint.GetCard, { headers: headers });
+  }
+
+  if (pageName === "Link") {
+   return this.http.get(environment.webApiBaseUrl + environment.apiEndPoint.GetLink, { headers: headers });
+  }
+ }
 }
