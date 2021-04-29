@@ -12,7 +12,7 @@
   <div>
     <div *ngFor="let form_elem of formElements" class="col-6">
       <div [ngSwitch]="form_elem.element_type">
-
+        <!-- element_type: {{form_elem.element_type}} , id: {{form_elem.tab_element_id}} -->
         <div class="form-group justify-content-center align-items-center" *ngSwitchCase="'input'">
           <label for="{{form_elem.element_name}}">{{form_elem.element_name}}</label>
           <input type="text" class="form-control form-control-sm" formControlName="{{form_elem.api_param_name}}">
@@ -28,7 +28,7 @@
           <select
             (change)="bindChildDropDownList(form_elem.tab_element_id, form_elem.child_elementid, $event, form_elem.element_action)"
             class="form-control form-control-sm" formControlName="{{form_elem.api_param_name}}"
-            id="{{form_elem.tab_element_id}}" attr.data-val="{{form_elem.obj_name}}0" ngModel required>
+            id="bind{{form_elem.tab_element_id}}" attr.data-val="{{form_elem.obj_name}}0" ngModel required>
             <option [value]="-1" selected>Please Select
             </option>
             <option *ngFor="let opt of form_elem.element_options" value="{{opt.opt_id}}"
