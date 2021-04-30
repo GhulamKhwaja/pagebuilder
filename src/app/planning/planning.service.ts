@@ -61,25 +61,7 @@ export class PlanningService {
  }
 
  getElementListByID(pageName, id): Observable<any> {
-  if (pageName == "Device") {
-   return this.http.get(environment.baseUrl + environment.apiEndPoint.getDeviceDtl + "/" + id, { headers: headers });
-  }
-
-  if (pageName == "Shelf") {
-   return this.http.get(environment.baseUrl + environment.apiEndPoint.getShelfDtl + "/" + id, { headers: headers });
-  }
-
-  if (pageName == "Port") {
-   return this.http.get(environment.baseUrl + environment.apiEndPoint.getPortDtl + "/" + id, { headers: headers });
-  }
-
-  if (pageName == "Card") {
-   return this.http.get(environment.baseUrl + environment.apiEndPoint.getCardDtl + "/" + id, { headers: headers });
-  }
-
-  if (pageName == "Link") {
-   return this.http.get(environment.baseUrl + environment.apiEndPoint.getLinkDtl + "/" + id, { headers: headers });
-  }
+  return this.http.get(environment.baseUrl + environment.apiEndPoint.getDeviceDtl + "/" + id + "/" + pageName, { headers: headers });
  }
 
  getDeviceDataByID(pageName, id): Observable<any> {

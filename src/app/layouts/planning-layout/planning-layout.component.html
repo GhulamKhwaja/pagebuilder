@@ -59,7 +59,7 @@
 
         <td *ngIf="ValbyID.elementtype">
          <div class="col">
-          Type
+          {{ ValbyID.type }} Type
           <div>
            <strong>{{ ValbyID.elementtype }}</strong>
           </div>
@@ -86,6 +86,62 @@
           Location
           <div>
            <strong>{{ ValbyID.loc }}</strong>
+          </div>
+         </div>
+        </td>
+        <td *ngIf="ValbyID.ParentNE">
+         <div class="col">
+          NE
+          <div>
+           <strong>{{ ValbyID.ParentNE }}</strong>
+          </div>
+         </div>
+        </td>
+        <td *ngIf="ValbyID.Number">
+         <div class="col">
+          {{ ValbyID.type }} Number
+          <div>
+           <strong>{{ ValbyID.Number }}</strong>
+          </div>
+         </div>
+        </td>
+        <td *ngIf="ValbyID.objecttypID">
+         <div class="col">
+          Object Type ID
+          <div>
+           <strong>{{ ValbyID.objecttypID }}</strong>
+          </div>
+         </div>
+        </td>
+        <td *ngIf="ValbyID.Slot">
+         <div class="col">
+          Slot
+          <div>
+           <strong>{{ ValbyID.Slot }}</strong>
+          </div>
+         </div>
+        </td>
+        <td *ngIf="ValbyID.StartPort">
+         <div class="col">
+          Start Port
+          <div>
+           <strong>{{ ValbyID.StartPort }}</strong>
+          </div>
+         </div>
+        </td>
+        <td *ngIf="ValbyID.EndPort">
+         <div class="col">
+          End Port
+          <div>
+           <strong>{{ ValbyID.EndPort }}</strong>
+          </div>
+         </div>
+        </td>
+        <td *ngIf="ValbyID.Bandwidth">
+         <div class="col">
+          Bandwidth
+          <div>
+           <strong>{{ ValbyID.Bandwidth }}</strong>
           </div>
          </div>
         </td>
