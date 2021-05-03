@@ -42,15 +42,15 @@ export class AddItemsComponent implements OnInit {
     });
    });
    //edit item
-   this.EditsubscriptionName = this.appService.getUpdate().subscribe((message) => {
-    //message contains the data sent from service
-    this.listItemMsgReceived = message.text;
-    this.pageType = this.listItemMsgReceived.pageType;
-    this.elementID = this.listItemMsgReceived.elementID;
-    // console.log('edit item');
-    // console.log(this.pageType, this.elementID);
-    this.GetallElementsByID(this.elementID, this.pageType);
-   });
+  });
+  this.EditsubscriptionName = this.appService.getUpdate().subscribe((message) => {
+   //message contains the data sent from service
+   this.listItemMsgReceived = message.text;
+   this.pageType = this.listItemMsgReceived.pageType;
+   this.elementID = this.listItemMsgReceived.elementID;
+   console.log("edit item:" + this.pageType + "-" + this.elementID);
+   // console.log(this.pageType, this.elementID);
+   this.GetallElementsByID(this.elementID, this.pageType);
   });
  }
  pageType;
@@ -138,11 +138,11 @@ export class AddItemsComponent implements OnInit {
  GetallElementsByID(id, type) {
   if (type == "Device" || type == "Shelf" || type == "Port" || type == "Card" || type == "Link") {
    this.planningService.getDeviceDataByID(type, id).subscribe((data: any) => {
+    console.log("Edit");
     this.deviceDtls = data.Details;
     this.BindItemsInEdit(this.deviceDtls);
    });
   }
-  
  }
 
  async BindItemsInEdit(dataDtls) {
@@ -150,13 +150,7 @@ export class AddItemsComponent implements OnInit {
    let val = dataDtls[0][key];
    Object.keys(this.myFormGroup.controls).forEach(async (formkey) => {
     if (formkey == key) {
-     console.log("formkey");
-     console.log(formkey);
-     console.log(key);
-     console.log(val);
      this.myFormGroup.get(formkey).setValue(val);
-     //this.myFormGroup.controls[formkey].patchValue(val);
-
      this.formElements.forEach((input_template) => {
       if (input_template.api_param_name == key) {
        this.http
