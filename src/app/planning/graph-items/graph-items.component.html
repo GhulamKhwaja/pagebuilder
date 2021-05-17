@@ -1,0 +1,10 @@
+<form [formGroup]="myFormGroup">
+ <div class="col text-right">
+  <ng-container *ngIf="showDiagram">
+   <div id="sample" style="position: relative">
+    <div id="myDiagramDiv" style="border: solid 1px black; width: 900px; height: 900px"></div>
+    <div id="contextMenu" oncontextmenu="return false;"></div>
+   </div>
+  </ng-container>
+ </div>
+</form>

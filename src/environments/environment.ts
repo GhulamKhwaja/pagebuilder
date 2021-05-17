@@ -1,6 +1,7 @@
 export const environment = {
  production: false,
  baseUrl: "http://localhost:3000/api",
+ gojsUrl: "http://localhost:3000/gojs",
  configBaseUrl: "http://localhost:3002",
  webApiBaseUrl: "http://localhost:8081",
  apiEndPoint: {
@@ -35,4 +36,5 @@ export const environment = {
  },
  uid: "7",
  orderid: "1",
+ apikey: "http://192.168.0.107:3000/api",
 };

@@ -1,10 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from "@angular/core";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { PlanningService } from "../planning.service";
 import { Location } from "@angular/common";
 import { FormGroup, FormControl, Validators, FormBuilder } from "@angular/forms";
 import * as $ from "jquery";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 // import { map } from "rxjs/operators";
 
 import "rxjs/add/operator/map";
@@ -12,6 +12,9 @@ import { map } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { ServiceService } from "src/app/service.service";
 import { Subscription } from "rxjs";
+
+import * as go from "gojs";
+import * as Jquery from "jquery";
 
 @Component({
  selector: "app-add-items",
@@ -26,6 +29,15 @@ export class AddItemsComponent implements OnInit {
  private subscriptionName: Subscription;
  private EditsubscriptionName: Subscription;
  listItemMsgReceived: any;
+ //declation for go js codes
+ myDiagram: any;
+ public showDiagram: boolean = false;
+ clickedPort: number;
+ tabsandElements: any = [];
+ selectedTab: any;
+ id: any;
+ currentModel: any[];
+ //end declation for go js codes
 
  constructor(private router: Router, private route: ActivatedRoute, private planningService: PlanningService, private _location: Location, private fb: FormBuilder, private http: HttpClient, private appService: ServiceService) {
   this.subscriptionName = this.appService.getUpdate().subscribe((message) => {
@@ -112,7 +124,7 @@ export class AddItemsComponent implements OnInit {
        .find("option")
        .remove();
 
-      $("#bind" + element_id).append($("<option></option>").attr("value", -1).attr("selected", true).text("Please Select"));
+      $("#bind" + element_id).append($("<option></option>").attr("value", -1).attr("selected", 1).text("Please Select"));
 
       $.each(child_element_options, function (key, value) {
        $("#bind" + element_id).append($("<option></option>").attr("value", value.opt_id).attr("data-val", value.opt_selected_value).text(value.opt_value));
@@ -167,7 +179,7 @@ export class AddItemsComponent implements OnInit {
            .find("option")
            .remove();
 
-          $("#bind" + element_id).append($("<option></option>").attr("value", -1).attr("selected", true).text("Please Select"));
+          $("#bind" + element_id).append($("<option></option>").attr("value", -1).attr("selected", 1).text("Please Select"));
 
           $.each(child_element_options, function (key, value) {
            $("#bind" + element_id).append($("<option></option>").attr("value", value.opt_id).attr("data-val", value.opt_selected_value).text(value.opt_value));
