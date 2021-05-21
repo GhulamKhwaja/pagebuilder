@@ -94,6 +94,10 @@ export class AddItemsComponent implements OnInit {
     alert(res.message);
     this.router.navigate(["/planning/list-items", { pageName: this.pageName, id: this.pageId }]);
    }
+   if (res.status === 0) {
+    alert(res.message);
+    this.router.navigate(["/planning/list-items", { pageName: this.pageName, id: this.pageId }]);
+   }
   });
  }
 

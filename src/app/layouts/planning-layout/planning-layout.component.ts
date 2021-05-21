@@ -137,17 +137,53 @@ export class PlanningLayoutComponent implements OnInit {
 
  deleteSelectedIds() {
   let selectedIdsArr = JSON.parse(localStorage.getItem("selectedIds"));
-  console.log();
+  console.log("pageId::" + this.pageId);
+  console.log("pageName::" + this.pageName);
   if (selectedIdsArr.length > 0) {
    selectedIdsArr.forEach((x) => {
-    let obj = {
-     uid: environment.uid,
-     orderid: environment.orderid,
-     NEID: x,
-    };
+    let obj;
+    if (this.pageName == "Device") {
+     obj = {
+      uid: environment.uid,
+      orderid: environment.orderid,
+      NEID: x,
+     };
+    }
+    if (this.pageName == "Card") {
+     obj = {
+      uid: environment.uid,
+      orderid: environment.orderid,
+      cardID: x,
+     };
+    }
+    if (this.pageName == "Shelf") {
+     obj = {
+      uid: environment.uid,
+      orderid: environment.orderid,
+      objectID: x,
+      objectType: "shelf",
+     };
+    }
+    if (this.pageName == "Port") {
+     obj = {
+      uid: environment.uid,
+      orderid: environment.orderid,
+      PortID: x,
+      ObjectType: null,
+      ObjectID: null,
+     };
+    }
+    if (this.pageName == "Link") {
+     obj = {
+      uid: environment.uid,
+      orderid: environment.orderid,
+      linkId: x,
+     };
+    }
     console.log(obj);
-    this.planningService.removeNE(obj).subscribe((res: any) => {
+    this.planningService.removeData(obj, this.pageName).subscribe((res: any) => {
      console.log(res);
+     alert(res.message);
     });
    });
   } else {

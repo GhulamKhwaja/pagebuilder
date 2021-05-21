@@ -49,11 +49,26 @@ export class PlanningService {
   return this.http.post(actionLink, data, { headers: headers });
  }
 
- removeNE(data): Observable<any> {
+ removeData(data, pageName): Observable<any> {
   const httpOptions: any = {
    headers: headers,
   };
-  const uri = environment.webApiBaseUrl + environment.apiEndPoint.removeNE;
+  let uri;
+  if (pageName === "Device") {
+   uri = environment.webApiBaseUrl + environment.apiEndPoint.removeNE;
+  }
+  if (pageName === "Card") {
+   uri = environment.webApiBaseUrl + environment.apiEndPoint.removeCard;
+  }
+  if (pageName === "Shelf") {
+   uri = environment.webApiBaseUrl + environment.apiEndPoint.removeShelf;
+  }
+  if (pageName === "Port") {
+   uri = environment.webApiBaseUrl + environment.apiEndPoint.removePort;
+  }
+  if (pageName === "Link") {
+   uri = environment.webApiBaseUrl + environment.apiEndPoint.removeLink;
+  }
 
   httpOptions.body = data;
 

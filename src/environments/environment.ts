@@ -24,6 +24,10 @@ export const environment = {
   GetPortsData: "/getPortData",
   GetCardData: "/getCardData",
   GetLinkData: "/getLinkData",
+  removeShelf: "/removeShelf",
+  removeCard: "/removeCard",
+  removePort: "/removePort",
+  removeLink: "/removeLink",
  },
  configApiEndPoint: {
   getDevice: "/getAllDevice",
