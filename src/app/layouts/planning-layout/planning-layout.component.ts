@@ -141,60 +141,8 @@ export class PlanningLayoutComponent implements OnInit {
  async deleteSelectedIds() {
   let selectedIdsArr = "";
   selectedIdsArr = JSON.parse(localStorage.getItem("selectedIds"));
-  await this.DeleteData(selectedIdsArr);
- }
-
- async DeleteData(selectedIdsArr) {
   if (selectedIdsArr.length > 0) {
-   selectedIdsArr.forEach((x) => {
-    let obj;
-    if (this.pageName == "Device") {
-     obj = {
-      uid: environment.uid,
-      orderid: environment.orderid,
-      NEID: x,
-     };
-    }
-    if (this.pageName == "Card") {
-     obj = {
-      uid: environment.uid,
-      orderid: environment.orderid,
-      cardID: x,
-     };
-    }
-    if (this.pageName == "Shelf") {
-     obj = {
-      uid: environment.uid,
-      orderid: environment.orderid,
-      objectID: x,
-      objectType: "shelf",
-     };
-    }
-    if (this.pageName == "Port") {
-     obj = {
-      uid: environment.uid,
-      orderid: environment.orderid,
-      PortID: x,
-      ObjectType: null,
-      ObjectID: null,
-     };
-    }
-    if (this.pageName == "Link") {
-     obj = {
-      uid: environment.uid,
-      orderid: environment.orderid,
-      linkId: x,
-     };
-    }
-    console.log(obj);
-    this.planningService.removeData(obj, this.pageName).subscribe((res: any) => {
-     console.log(res);
-     alert(res.message);
-    });
-   });
-   if (this.pageName == "Device") await this.sleep(8000);
-   else if (this.pageName == "Card") await this.sleep(5000);
-   else await this.sleep(500);
+   await this.DeleteData(selectedIdsArr);
    this.RefreshDta();
    let url = "/planning/list-items/" + this.pageName + "/" + this.pageId + "";
    this.router.navigateByUrl(url);
@@ -202,6 +150,62 @@ export class PlanningLayoutComponent implements OnInit {
    alert("select at least one item to delete");
   }
  }
+
+ async DeleteData(selectedIdsArr) {
+  for (let x of selectedIdsArr) {
+   let obj;
+   if (this.pageName == "Device") {
+    obj = {
+     uid: environment.uid,
+     orderid: environment.orderid,
+     NEID: x,
+    };
+   }
+   if (this.pageName == "Card") {
+    obj = {
+     uid: environment.uid,
+     orderid: environment.orderid,
+     cardID: x,
+    };
+   }
+   if (this.pageName == "Shelf") {
+    obj = {
+     uid: environment.uid,
+     orderid: environment.orderid,
+     objectID: x,
+     objectType: "shelf",
+    };
+   }
+   if (this.pageName == "Port") {
+    obj = {
+     uid: environment.uid,
+     orderid: environment.orderid,
+     PortID: x,
+     ObjectType: null,
+     ObjectID: null,
+    };
+   }
+   if (this.pageName == "Link") {
+    obj = {
+     uid: environment.uid,
+     orderid: environment.orderid,
+     linkId: x,
+    };
+   }
+
+   var DataResponse = await this.RemoveElementata(obj, this.pageName);
+   alert(DataResponse.message);
+  }
+ }
+
+ async RemoveElementata(obj, pgname) {
+  let response = await this.RemoveElementatafromAPI(obj, pgname);
+  return response;
+ }
+ public RemoveElementatafromAPI(obj, pgname): Promise<any> {
+  return this.planningService.removeData(obj, pgname).toPromise();
+ }
+
  sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
  }
