@@ -27,9 +27,11 @@ export class PlanningLayoutComponent implements OnInit {
 
    this.listItemMsgReceived = message.text;
    this.pageType = this.listItemMsgReceived.pageType;
+   if (this.pageType == undefined) this.pageType = this.pageName;
    this.elementID = this.listItemMsgReceived.elementID;
-
-   console.log(this.pageType, this.elementID);
+   console.log("planninglayout");
+   console.log("this.pageType::" + this.pageType);
+   console.log("this.elementID::" + this.elementID);
    this.GetallDataByID(this.elementID, this.pageType);
   });
  }
@@ -62,7 +64,7 @@ export class PlanningLayoutComponent implements OnInit {
  navigateToMenu(element) {
   let pageID = element.pageId;
   let pageName = element.pageName;
-  this.router.navigate(["/planning/list-items", { pageName: pageName, id: pageID }]);
+  this.router.navigate(["/planning/list-items", { pageName: pageName, pageID: pageID }]);
  }
 
  setValue(element) {
@@ -121,6 +123,7 @@ export class PlanningLayoutComponent implements OnInit {
  }
 
  showAddDiv() {
+  this.RefreshDta();
   if (this.showDiv1) {
    this.showDiv1 = false;
    this.showDiv2 = true;
@@ -135,10 +138,13 @@ export class PlanningLayoutComponent implements OnInit {
   console.log(this.showDiv1);
  }
 
- deleteSelectedIds() {
-  let selectedIdsArr = JSON.parse(localStorage.getItem("selectedIds"));
-  console.log("pageId::" + this.pageId);
-  console.log("pageName::" + this.pageName);
+ async deleteSelectedIds() {
+  let selectedIdsArr = "";
+  selectedIdsArr = JSON.parse(localStorage.getItem("selectedIds"));
+  await this.DeleteData(selectedIdsArr);
+ }
+
+ async DeleteData(selectedIdsArr) {
   if (selectedIdsArr.length > 0) {
    selectedIdsArr.forEach((x) => {
     let obj;
@@ -186,11 +192,19 @@ export class PlanningLayoutComponent implements OnInit {
      alert(res.message);
     });
    });
+   if (this.pageName == "Device") await this.sleep(8000);
+   else if (this.pageName == "Card") await this.sleep(5000);
+   else await this.sleep(500);
+   this.RefreshDta();
+   let url = "/planning/list-items/" + this.pageName + "/" + this.pageId + "";
+   this.router.navigateByUrl(url);
   } else {
    alert("select at least one item to delete");
   }
  }
-
+ sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+ }
  GetallDataByID(id, type) {
   this.deviceDtls = null;
   if (type == "Device" || type == "Shelf" || type == "Card" || type == "Link" || type == "Port") {
@@ -199,5 +213,12 @@ export class PlanningLayoutComponent implements OnInit {
     console.log(this.deviceDtls);
    });
   }
+ }
+
+ RefreshDta() {
+  let pageDetails = { pageType: this.pageType, elementID: 0, pageName: this.pageName, pageID: this.pageId };
+  this.sendMessage(pageDetails);
+  localStorage.setItem("pageType", this.pageType);
+  localStorage.setItem("elementID", "0");
  }
 }

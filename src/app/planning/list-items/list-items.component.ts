@@ -22,7 +22,7 @@ export class ListItemsComponent implements OnInit {
    this.messageReceived = message.text;
    this.pageName = this.messageReceived.pageName;
    this.pageId = this.messageReceived.pageID;
-
+   this.SelectedIDs = [];
    console.log(this.pageName, this.pageId);
    this.planningService.getDeviceList(this.pageName).subscribe((data: any) => {
     this.allDevices = data.Details;

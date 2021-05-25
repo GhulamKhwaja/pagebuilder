@@ -15,6 +15,8 @@ import { Subscription } from "rxjs";
 
 import * as go from "gojs";
 import * as Jquery from "jquery";
+import { CompileDirectiveMetadata } from "@angular/compiler";
+import { isDifferent } from "@angular/core/src/render3/util";
 
 @Component({
  selector: "app-add-items",
@@ -91,12 +93,13 @@ export class AddItemsComponent implements OnInit {
   this.planningService.createPageValues(this.submitAction, this.myFormGroup.value).subscribe((res) => {
    // console.log(res);
    if (res.status === 200) {
+    this.RefreshData();
     alert(res.message);
-    this.router.navigate(["/planning/list-items", { pageName: this.pageName, id: this.pageId }]);
+    this.router.navigate(["/planning/list-items", { pageName: this.pageName, pageID: this.pageId }]);
    }
    if (res.status === 0) {
     alert(res.message);
-    this.router.navigate(["/planning/list-items", { pageName: this.pageName, id: this.pageId }]);
+    this.router.navigate(["/planning/list-items", { pageName: this.pageName, pageID: this.pageId }]);
    }
   });
  }
@@ -140,7 +143,7 @@ export class AddItemsComponent implements OnInit {
 
  discardFunc() {
   // this._location.back();
-
+  //this.RefreshData();
   let url = "/planning/list-items/" + this.pageName + "/" + this.pageId + "";
   // console.log(url);
   return url;
@@ -153,11 +156,16 @@ export class AddItemsComponent implements OnInit {
 
  GetallElementsByID(id, type) {
   if (type == "Device" || type == "Shelf" || type == "Port" || type == "Card" || type == "Link") {
-   this.planningService.getDeviceDataByID(type, id).subscribe((data: any) => {
-    console.log("Edit");
-    this.deviceDtls = data.Details;
-    this.BindItemsInEdit(this.deviceDtls);
-   });
+   console.log("GetallElementsByID id::" + id);
+   if (id != 0) {
+    this.planningService.getDeviceDataByID(type, id).subscribe((data: any) => {
+     console.log("Edit");
+     this.deviceDtls = data.Details;
+     this.BindItemsInEdit(this.deviceDtls);
+    });
+   } else {
+    this.Cleardata();
+   }
   }
  }
 
@@ -201,5 +209,24 @@ export class AddItemsComponent implements OnInit {
 
  sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+ }
+
+ sendMessage(pageDetails): void {
+  // send message to subscribers via observable subject
+  this.appService.sendUpdate(pageDetails);
+ }
+ RefreshData() {
+  let elementDetails = { pageType: this.pageType, elementID: 0, pageName: this.pageName, pageID: this.pageId };
+  this.sendMessage(elementDetails);
+  localStorage.setItem("pageType", this.pageType);
+  localStorage.setItem("elementID", "0");
+  localStorage.setItem("pageName", this.pageName);
+  localStorage.setItem("pageID", this.pageId);
+  this.Cleardata();
+ }
+ Cleardata() {
+  Object.keys(this.myFormGroup.controls).forEach(async (formkey) => {
+   this.myFormGroup.get(formkey).setValue("");
+  });
  }
 }
