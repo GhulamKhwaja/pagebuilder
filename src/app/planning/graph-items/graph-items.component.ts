@@ -72,7 +72,7 @@ export class GraphItemsComponent implements OnInit, AfterViewInit {
    }
    if (this.pageType == "Device") {
     data = { START_NEID: this.elementID };
-    actionLink = environment.gojsUrl + "/getLinkView";
+    actionLink = environment.gojsUrl + "/GetNEElevationLinkView";
    }
    if (this.pageType == "Card") {
     data = { cardID: this.elementID };
