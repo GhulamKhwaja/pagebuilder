@@ -17,6 +17,7 @@ import * as go from "gojs";
 import * as Jquery from "jquery";
 import { CompileDirectiveMetadata } from "@angular/compiler";
 import { isDifferent } from "@angular/core/src/render3/util";
+import { ZoomSlider } from 'src/app/zoomSlider';
 
 @Component({
  selector: "app-add-items",

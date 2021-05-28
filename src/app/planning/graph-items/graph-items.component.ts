@@ -14,6 +14,10 @@ import { Subscription } from "rxjs";
 
 import * as go from "gojs";
 import * as Jquery from "jquery";
+import { ZoomSlider } from 'src/app/zoomSlider';
+
+
+
 declare var $: any;
 @Component({
  selector: "app-graph-items",
@@ -25,7 +29,7 @@ export class GraphItemsComponent implements OnInit, AfterViewInit {
  // formTemplate: any = form_template;
  //declation for go js codes
  id: any;
- myDiagram: any;
+ myDiagram: any; 
  selectedTab: any;
  public showDiagram: boolean = false;
  tabsandElements: any = [];
@@ -90,7 +94,8 @@ export class GraphItemsComponent implements OnInit, AfterViewInit {
  deviceDtls;
  ngOnInit() {
   this.myFormGroup = new FormGroup({});
-  this.showDiagram = true;
+  this.showDiagram = true; 
+  
  }
 
  //go js code
@@ -119,6 +124,12 @@ export class GraphItemsComponent implements OnInit, AfterViewInit {
    initialScale: 0.4,
    initialContentAlignment: go.Spot.TopCenter,
    "undoManager.isEnabled": true,
+   
+  });
+
+  var setZoomSlider = new ZoomSlider(this.myDiagram, {
+    alignment: go.Spot.TopLeft, alignmentFocus: go.Spot.TopLeft,
+    size: 180, buttonSize: 35, orientation: 'vertical'
   });
 
   function getContMenu() {
@@ -199,10 +210,12 @@ export class GraphItemsComponent implements OnInit, AfterViewInit {
    )
   );
 
+  
+
   // var zoomSlider = new ZoomSlider(this.myDiagram,
   //   {
-  //     alignment: go.Spot.TopRight, alignmentFocus: go.Spot.TopRight,
-  //     size: 50, buttonSize: 30, orientation: 'horizontal'
+  //     alignment: go.Spot.TopLeft, alignmentFocus: go.Spot.TopLeft,
+  //     size: 150, buttonSize: 30, orientation: 'vertical'
   //   });
 
   this.myDiagram.groupTemplate = $(
@@ -476,7 +489,13 @@ export class GraphItemsComponent implements OnInit, AfterViewInit {
    new go.Binding("points").makeTwoWay(),
    $(go.Shape, { stroke: "#2F4F4F", strokeWidth: 2 })
   );
- }
+ 
+  // var setZoomSlider = new ZoomSlider(this.myDiagram, {
+  //   alignment: new go.Point(120,5) , alignmentFocus: new go.Point(120,5),
+  //   size: 150, buttonSize: 30, orientation: 'vertical'
+  // });
+
+}
 
  loadView(viewUrl, viewBody) {
   let headers = new HttpHeaders();
@@ -515,9 +534,15 @@ export class GraphItemsComponent implements OnInit, AfterViewInit {
   //   }
   // );
 
-  this.myDiagram.model = go.Model.fromJson({ class: "go.GraphLinksModel", copiesArrays: true, copiesArrayObjects: true, linkFromPortIdProperty: "fromPort", linkToPortIdProperty: "toPort", nodeDataArray: resArray, linkDataArray: [{ from: "ne1", to: "ne2" }] });
+  this.myDiagram.model = go.Model.fromJson({ class: "go.GraphLinksModel", copiesArrays: true, 
+                          copiesArrayObjects: true, linkFromPortIdProperty: "fromPort", 
+                          linkToPortIdProperty: "toPort", nodeDataArray: resArray, 
+                          linkDataArray: [{ from: "ne1", to: "ne2" }] });
 
   //this.myDiagram.div = null;
+  
+
+  
  }
 
  toggleNavMenu() {
@@ -599,5 +624,7 @@ export class GraphItemsComponent implements OnInit, AfterViewInit {
      this.ngAfterViewResonse("");
     }
    );
+    
+
  }
 }
