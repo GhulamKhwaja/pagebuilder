@@ -64,15 +64,19 @@ export class GraphItemsComponent implements OnInit, AfterViewInit {
 
    if (this.pageType == "Shelf") {
     data = { ShelfID: this.elementID };
-    actionLink = environment.baseUrl + "/viewShelf";
+    actionLink = environment.gojsUrl + "/viewShelf";
    }
    if (this.pageType == "Device") {
     data = { START_NEID: this.elementID };
-    actionLink = environment.gojsUrl + "/getNEElevationLinkView";
+    actionLink = environment.gojsUrl + "/getLinkView";
    }
    if (this.pageType == "Card") {
     data = { cardID: this.elementID };
     actionLink = environment.baseUrl + "/viewCard";
+   }
+   if (this.pageType == "Link") {
+    data = { linkID: this.elementID };
+    actionLink = environment.gojsUrl + "/getLinkView";
    }
    if (actionLink == "") this.ngAfterViewResonse("");
    else {
@@ -116,7 +120,7 @@ export class GraphItemsComponent implements OnInit, AfterViewInit {
   var $ = go.GraphObject.make;
 
   this.myDiagram = $(go.Diagram, "myDiagramDiv", {
-   initialScale: 0.4,
+   initialScale: 0.5,
    initialContentAlignment: go.Spot.TopCenter,
    "undoManager.isEnabled": true,
   });
@@ -163,6 +167,8 @@ export class GraphItemsComponent implements OnInit, AfterViewInit {
   this.myDiagram.nodeTemplate = $(
    go.Node,
    "Vertical",
+   { avoidable: false },
+   $(go.Panel, "Auto",
    new go.Binding("type", "case", function (c) {
     return c <= 2 ? go.Panel.Horizontal : go.Panel.Vertical;
    }),
@@ -197,6 +203,7 @@ export class GraphItemsComponent implements OnInit, AfterViewInit {
      return showpic !== 0;
     })
    )
+   )
   );
 
   // var zoomSlider = new ZoomSlider(this.myDiagram,
@@ -210,7 +217,8 @@ export class GraphItemsComponent implements OnInit, AfterViewInit {
    "Auto",
    new go.Binding("position", "loc", go.Point.parse),
 
-   { movable: true },
+   { movable: false },
+   { avoidable: false },
 
    new go.Binding("layout", "lay", function (lay) {
     if (lay.horizontal) {
@@ -240,10 +248,10 @@ export class GraphItemsComponent implements OnInit, AfterViewInit {
    ),
    $(
     go.TextBlock,
-    { margin: 5 },
+    { margin: 3 },
     {
      alignment: go.Spot.Top,
-     font: "Bold 18pt Sans-Serif",
+     font: "Bold 8pt Sans-Serif",
     },
     new go.Binding("visible", "showheader", function (showtxt) {
      return showtxt !== 0;
@@ -515,7 +523,7 @@ export class GraphItemsComponent implements OnInit, AfterViewInit {
   //   }
   // );
 
-  this.myDiagram.model = go.Model.fromJson({ class: "go.GraphLinksModel", copiesArrays: true, copiesArrayObjects: true, linkFromPortIdProperty: "fromPort", linkToPortIdProperty: "toPort", nodeDataArray: resArray, linkDataArray: [{ from: "ne1", to: "ne2" }] });
+  this.myDiagram.model = go.Model.fromJson({ class: "go.GraphLinksModel", copiesArrays: true, copiesArrayObjects: true, linkFromPortIdProperty: "fromPort", linkToPortIdProperty: "toPort", nodeDataArray: resArray[0], linkDataArray: resArray[1]});
 
   //this.myDiagram.div = null;
  }
